@@ -1,0 +1,17 @@
+{
+  "name": "ticketing-bot-typescript",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "repository": "https://github.com/hyunjeong98/ticketing-alert-bot-typescript.git",
+  "author": "hyunjeong.kim <hyunjeong.kim@phloxcorp.io>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/lodash": "^4.14.199",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "eslint": "^8.51.0",
+    "serverless-plugin-typescript": "^2.1.5",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {}
+}

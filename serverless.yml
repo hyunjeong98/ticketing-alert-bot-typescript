@@ -6,5 +6,8 @@ provider:
   runtime: nodejs16.x
 
 functions:
-  xia-ticekting:
-    handler: handler.js
+  xia-ticketing:
+    handler: handler.xia
+
+plugins:
+  - serverless-plugin-typescript
