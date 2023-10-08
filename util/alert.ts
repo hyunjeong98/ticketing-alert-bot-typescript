@@ -3,6 +3,7 @@ import { Schedule, TICKETING_SITE } from '../type/types'
 import { hasWaitingService, isSameTime } from './common'
 import { getCancelAlert, getPayAlert, getTicketingAlert, getTicketingEveAlert, getWaitingAlert, getWaitingEveAlert } from './alertTime'
 import writeTweet from './writeTweet'
+import { getCancelTicketTime, getPayTime, getTicketWaitingTime } from './ticketingTime'
 
 export default async function alert(musicalName: string, scheduleList: Schedule[]) {
 
@@ -16,13 +17,13 @@ export default async function alert(musicalName: string, scheduleList: Schedule[
   for (const schedule of scheduleList) {
     // 티켓팅 전날 알림
     if (isSameTime(getTicketingEveAlert(schedule.time))) {
-      await writeTweet(client, '티켓팅 D-1', schedule, musicalName)
+      await writeTweet(client, '티켓팅 D-1', schedule.time, schedule.sites, musicalName)
       continue
     }
 
     // 티켓팅 당일 알림
     if (isSameTime(getTicketingAlert(schedule.time))) {
-      await writeTweet(client, '티켓팅', schedule, musicalName)
+      await writeTweet(client, '티켓팅', schedule.time, schedule.sites, musicalName)
       continue
     }
 
@@ -33,25 +34,26 @@ export default async function alert(musicalName: string, scheduleList: Schedule[
 
     // 입금 마감 알림
     if (isSameTime(getPayAlert(schedule.time))) {
-      await writeTweet(client, '입금마감', schedule, musicalName)
+      await writeTweet(client, '입금마감', getPayTime(schedule.time), schedule.sites, musicalName)
       continue
     }
 
     for (const site of schedule.sites) {
       // 취켓팅 알림
       if (isSameTime(getCancelAlert(schedule.time, site))) {
-        await writeTweet(client, '취켓팅', schedule, musicalName)
+        await writeTweet(client, '취켓팅', getCancelTicketTime(schedule.time, site), [site], musicalName)
         continue
       }
 
       if (hasWaitingService(site)) {
         // 예매대기 전날 알림
+        const waitingTime = getTicketWaitingTime(schedule.time, site)
         if (isSameTime(getWaitingEveAlert(schedule.time, site))) {
-          await writeTweet(client, '예매대기 D-1', schedule, musicalName)
+          await writeTweet(client, '예매대기 D-1', waitingTime!, [site], musicalName)
           continue
         }
         if (isSameTime(getWaitingAlert(schedule.time, site))) {
-          await writeTweet(client, '예매대기', schedule, musicalName)
+          await writeTweet(client, '예매대기', waitingTime!, [site], musicalName)
           continue
         }
       }
