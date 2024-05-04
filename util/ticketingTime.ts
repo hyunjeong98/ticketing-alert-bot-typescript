@@ -4,6 +4,7 @@ import { TICKETING_SITE } from '../type/types'
 function getCancelTicketTime(orgTicketingTime: Date, ticketingStie: TICKETING_SITE) {
   const result = new Date(orgTicketingTime)
   switch (ticketingStie) {
+    case TICKETING_SITE.DAEJEON:
     case TICKETING_SITE.INTERPARK:
       result.setDate(orgTicketingTime.getDate() + 2)
       result.setHours(2)

@@ -9,6 +9,7 @@ export enum TICKETING_SITE {
   AUCTION = '옥션',
   LOTTE = '샤롯데씨어터',
   TOPING_FIRST = '인터파크 토핑 선예매',
+  DAEJEON = '대전예술의전당',
 }
 
 export type Schedule = {
