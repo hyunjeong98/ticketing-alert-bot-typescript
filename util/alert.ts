@@ -5,7 +5,7 @@ import { getCancelAlert, getPayAlert, getTicketingAlert, getTicketingEveAlert, g
 import writeTweet from './writeTweet'
 import { getCancelTicketTime, getPayTime, getTicketWaitingTime } from './ticketingTime'
 
-export default async function alert(musicalName: string, scheduleList: Schedule[]) {
+export default async function alert(musicalName: string, scheduleList: Schedule[], excludeSites: TICKETING_SITE[] = []) {
 
   const client = new TwitterApi({
     appKey: process.env.APP_KEY!,
@@ -13,6 +13,8 @@ export default async function alert(musicalName: string, scheduleList: Schedule[
     accessToken: process.env.ACCESS_TOKEN!,
     accessSecret: process.env.ACCESS_SECRET!,
   })
+
+  const cardPaymentSites = [TICKETING_SITE.META, TICKETING_SITE.BUSAN_BANK, TICKETING_SITE.MON]
 
   for (const schedule of scheduleList) {
     // 티켓팅 전날 알림
@@ -27,18 +29,21 @@ export default async function alert(musicalName: string, scheduleList: Schedule[
       continue
     }
 
-    // 토핑 선예매는 아래 알림 패스
-    if (schedule.sites.includes(TICKETING_SITE.TOPING_FIRST)) {
-      continue
-    }
+    // 카드 결제 사이트, 토핑 선예매 사이트, 제외 사이트는 아래 알림 패스
+    const targetSites = schedule.sites.filter(site => 
+      !cardPaymentSites.includes(site) && 
+      !excludeSites.includes(site) && 
+      site !== TICKETING_SITE.TOPING_FIRST
+    )
+    if (targetSites.length === 0) continue
 
     // 입금 마감 알림
     if (isSameTime(getPayAlert(schedule.time))) {
-      await writeTweet(client, '입금마감', getPayTime(schedule.time), schedule.sites, musicalName)
+      await writeTweet(client, '입금마감', getPayTime(schedule.time), targetSites, musicalName)
       continue
     }
 
-    for (const site of schedule.sites) {
+    for (const site of targetSites) {
       // 취켓팅 알림
       const cancelTime = getCancelTicketTime(schedule.time, site)
       if (cancelTime == null) continue
