@@ -2,17 +2,21 @@ import { getCancelTicketTime, getTicketWaitingTime } from "./ticketingTime"
 import { Schedule, TICKETING_SITE } from "../type/types"
 import { format, hasWaitingService } from "./common"
 
-export default function mainTwit(musicalName: string, ticketingNum: string, scheduleList: Schedule[]) {
+export default function mainTwit(musicalName: string, ticketingNum: string, scheduleList: Schedule[], excludeSites: TICKETING_SITE[] = []) {
   const ticketingPrint = scheduleList.map(elem => {
     return `${format(elem.time)} ${elem.sites.join(', ')}`
   })
 
   const cancelList: Schedule[] = []
+  const usedSites = new Set<TICKETING_SITE>()
   scheduleList.forEach(schedule => {
     schedule.sites.forEach(site => {
-      if (site === TICKETING_SITE.TOPING_FIRST) return
+      if (excludeSites.includes(site)) return
+      const cancelTime = getCancelTicketTime(schedule.time, site)
+      if (cancelTime == null || usedSites.has(site)) return
+      usedSites.add(site)
       cancelList.push({
-        time: getCancelTicketTime(schedule.time, site),
+        time: cancelTime,
         sites: [site],
       })
     })
@@ -36,6 +40,7 @@ export default function mainTwit(musicalName: string, ticketingNum: string, sche
   const waitingList: Schedule[] = []
   scheduleList.forEach(schedule => {
     schedule.sites.forEach(site => {
+      if (excludeSites.includes(site)) return
       if (hasWaitingService(site)) {
         waitingList.push({
           time: getTicketWaitingTime(schedule.time, site) || new Date(0),
