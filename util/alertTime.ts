@@ -1,4 +1,4 @@
-import { getCancelTicketTime, getTicketWaitingTime } from "./ticketingTime"
+import { getTicketWaitingTime } from "./ticketingTime"
 import { TICKETING_SITE } from "../type/types"
 
 // 본 티켓팅 전날 알림 시간 계산
