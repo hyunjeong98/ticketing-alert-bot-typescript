@@ -27,22 +27,24 @@ function getCancelTicketTime(orgTicketingTime: Date, ticketingStie: TICKETING_SI
       return result
     case TICKETING_SITE.LOTTE:
     case TICKETING_SITE.TICKETLINK:
-      result.setDate(orgTicketingTime.getDate() + 2)
-      result.setHours(0)
-      result.setMinutes(8)
-      return result
     case TICKETING_SITE.YES24:
       result.setDate(orgTicketingTime.getDate() + 2)
       result.setHours(0)
-      result.setMinutes(3)
+      result.setMinutes(0)
       return result
     case TICKETING_SITE.AUCTION:
       result.setDate(orgTicketingTime.getDate() + 2)
       result.setHours(0)
       result.setMinutes(7)
       return result
-    default:
+    case TICKETING_SITE.DREAM_THEATER:
+    case TICKETING_SITE.CLIP_SERVEICE:
+      result.setDate(orgTicketingTime.getDate() + 2)
+      result.setHours(17)
+      result.setMinutes(0)
       return result
+    default:
+      return null
   }
 }
 
