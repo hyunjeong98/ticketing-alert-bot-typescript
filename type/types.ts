@@ -10,6 +10,11 @@ export enum TICKETING_SITE {
   LOTTE = '샤롯데씨어터',
   TOPING_FIRST = '인터파크 토핑 선예매',
   DAEJEON = '대전예술의전당',
+  MON = 'MON 멤버십',
+  META = '메타클럽',
+  DREAM_THEATER = '드림씨어터',
+  BUSAN_BANK = '부산은행',
+  CLIP_SERVEICE = '클립서비스',
 }
 
 export type Schedule = {
