@@ -40,8 +40,10 @@ export default async function alert(musicalName: string, scheduleList: Schedule[
 
     for (const site of schedule.sites) {
       // 취켓팅 알림
-      if (isSameTime(getCancelAlert(schedule.time, site))) {
-        await writeTweet(client, '취켓팅', getCancelTicketTime(schedule.time, site), [site], musicalName)
+      const cancelTime = getCancelTicketTime(schedule.time, site)
+      if (cancelTime == null) continue
+      if (isSameTime(getCancelAlert(cancelTime))) {
+        await writeTweet(client, '취켓팅', cancelTime, [site], musicalName)
         continue
       }
 

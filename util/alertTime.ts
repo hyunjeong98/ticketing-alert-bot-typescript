@@ -25,8 +25,7 @@ function getPayAlert(orgTicketingTime: Date) {
 }
 
 // 취켓 알람 시간 계산
-function getCancelAlert(orgTicketingTime: Date, ticketingSite: TICKETING_SITE) {
-  const cancelTicketTime = getCancelTicketTime(orgTicketingTime, ticketingSite)
+function getCancelAlert(cancelTicketTime: Date) {
   const result = new Date(cancelTicketTime)
   result.setHours(result.getHours() - 1)
   return result
