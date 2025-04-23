@@ -54,7 +54,7 @@ export default function mainTwit(musicalName: string, ticketingNum: string, sche
 
   const content =
     `<${musicalName}>\n` +
-    `${ticketingNum} TICKET OPEN\n\n` +
+    `${ticketingNum} 티켓 오픈\n\n` +
     `[본 티켓팅]\n` +
     `${ticketingPrint.join('\n')}\n` +
     `\n[취켓팅]\n` +
