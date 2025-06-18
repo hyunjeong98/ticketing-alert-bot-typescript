@@ -39,7 +39,7 @@ function getCancelTicketTime(orgTicketingTime: Date, ticketingStie: TICKETING_SI
       return result
     case TICKETING_SITE.DREAM_THEATER:
     case TICKETING_SITE.CLIP_SERVEICE:
-      result.setDate(orgTicketingTime.getDate() + 2)
+      result.setDate(orgTicketingTime.getDate() + 1)
       result.setHours(17)
       result.setMinutes(0)
       return result
@@ -66,12 +66,21 @@ function getTicketWaitingTime(orgTicketingTime: Date, ticketingSite: TICKETING_S
 }
 
 // 입금 마감 시간 계산
-function getPayTime(orgTicketingTime: Date) {
+function getPayTime(orgTicketingTime: Date, ticketingSite?: TICKETING_SITE) {
   const result = new Date(orgTicketingTime)
-  result.setDate(result.getDate() + 1) // 티켓팅 다음날
-  result.setHours(23)
-  result.setMinutes(59)
-  return result
+  switch (ticketingSite) {
+    case TICKETING_SITE.CLIP_SERVEICE:
+    case TICKETING_SITE.DREAM_THEATER:
+      result.setDate(orgTicketingTime.getDate() + 1)
+      result.setHours(11)
+      result.setMinutes(59)
+      return result
+    default:
+      result.setDate(result.getDate() + 1) // 티켓팅 다음날
+      result.setHours(23)
+      result.setMinutes(59)
+      return result
+  }
 }
 
 export {
