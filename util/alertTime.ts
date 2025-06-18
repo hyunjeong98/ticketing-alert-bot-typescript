@@ -17,10 +17,14 @@ function getTicketingAlert(orgTicketingTime: Date) {
 }
 
 // 입금 마감 알림 시간 계산
-function getPayAlert(orgTicketingTime: Date) {
+function getPayAlert(orgTicketingTime: Date, ticketingSite?: TICKETING_SITE) {
   const result = new Date(orgTicketingTime)
   result.setDate(result.getDate() + 1) // 티켓팅 다음날
-  result.setHours(22) // 오후 10시대
+  if (ticketingSite === TICKETING_SITE.DREAM_THEATER) {
+    result.setHours(10) // 오전 10시대
+  } else {
+    result.setHours(22) // 오후 10시대
+  }
   return result
 }
 
