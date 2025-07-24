@@ -71,9 +71,9 @@ function getPayTime(orgTicketingTime: Date, ticketingSite?: TICKETING_SITE) {
   switch (ticketingSite) {
     case TICKETING_SITE.CLIP_SERVEICE:
     case TICKETING_SITE.DREAM_THEATER:
-      result.setDate(orgTicketingTime.getDate() + 1)
-      result.setHours(11)
-      result.setMinutes(59)
+      result.setDate(result.getDate() + 1)
+      result.setHours(17)
+      result.setMinutes(0)
       return result
     default:
       result.setDate(result.getDate() + 1) // 티켓팅 다음날
