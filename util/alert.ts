@@ -38,14 +38,16 @@ export default async function alert(musicalName: string, scheduleList: Schedule[
     if (targetSites.length === 0) continue
 
     // 입금 마감 알림
-    if (targetSites.includes(TICKETING_SITE.DREAM_THEATER)) {
-      const notDreamTheaterSites = targetSites.filter(site => site !== TICKETING_SITE.DREAM_THEATER)
-      if (isSameTime(getPayAlert(schedule.time, TICKETING_SITE.DREAM_THEATER))) {
-        await writeTweet(client, '입금마감', getPayTime(schedule.time, TICKETING_SITE.DREAM_THEATER), [TICKETING_SITE.DREAM_THEATER], musicalName)
+    const specificSites = [TICKETING_SITE.DREAM_THEATER, TICKETING_SITE.LG_ART_CENTER]
+    const scheduleSpecificSites = targetSites.filter(site => specificSites.includes(site))
+    if (scheduleSpecificSites.length > 0) {
+      const notSpecificSites = targetSites.filter(site => !specificSites.includes(site))
+      if (isSameTime(getPayAlert(schedule.time, scheduleSpecificSites[0]))) {
+        await writeTweet(client, '입금마감', getPayTime(schedule.time, scheduleSpecificSites[0]), [scheduleSpecificSites[0]], musicalName)
         continue
       }
       if (isSameTime(getPayAlert(schedule.time))) {
-        await writeTweet(client, '입금마감', getPayTime(schedule.time), notDreamTheaterSites, musicalName)
+        await writeTweet(client, '입금마감', getPayTime(schedule.time), notSpecificSites, musicalName)
         continue
       }
     } else {
