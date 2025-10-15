@@ -15,6 +15,7 @@ export enum TICKETING_SITE {
   DREAM_THEATER = '드림씨어터',
   BUSAN_BANK = '부산은행',
   CLIP_SERVEICE = '클립서비스',
+  LG_ART_CENTER = 'LG아트센터',
 }
 
 export type Schedule = {
