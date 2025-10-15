@@ -43,6 +43,9 @@ function getCancelTicketTime(orgTicketingTime: Date, ticketingStie: TICKETING_SI
       result.setHours(17)
       result.setMinutes(0)
       return result
+    case TICKETING_SITE.LG_ART_CENTER:
+      result.setDate(orgTicketingTime.getDate() + 1)
+      return result
     default:
       return null
   }
@@ -74,6 +77,9 @@ function getPayTime(orgTicketingTime: Date, ticketingSite?: TICKETING_SITE) {
       result.setDate(result.getDate() + 1)
       result.setHours(17)
       result.setMinutes(0)
+      return result
+    case TICKETING_SITE.LG_ART_CENTER:
+      result.setDate(result.getDate() + 1)
       return result
     default:
       result.setDate(result.getDate() + 1) // 티켓팅 다음날
