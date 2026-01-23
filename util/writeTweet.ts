@@ -9,9 +9,10 @@ export default async function writeTweet(
   sites: TICKETING_SITE[],
   musicalName: string
 ) {
+  const sitePrint = sites.map(site => site === TICKETING_SITE.INTERPARK_SYNC ? '인터파크' : site).join(', ')
   await client.v2.tweet(
     `[${alertType}] ${musicalName} \n\u{1F352} ${format(
       time
-    )} \n\u{1F352} ${sites.join(', ')}`
+    )} \n\u{1F352} ${sitePrint}`
   )
 }
