@@ -4,7 +4,8 @@ import { format, hasWaitingService } from "./common"
 
 export default function mainTwit(musicalName: string, ticketingNum: string, scheduleList: Schedule[], excludeSites: TICKETING_SITE[] = []) {
   const ticketingPrint = scheduleList.map(elem => {
-    return `${format(elem.time)} ${elem.sites.join(', ')}`
+    const sitePrint = elem.sites.map(site => site === TICKETING_SITE.INTERPARK_SYNC ? '인터파크' : site).join(', ')
+    return `${format(elem.time)} ${sitePrint}`
   })
 
   const cancelList: Schedule[] = []
@@ -34,14 +35,15 @@ export default function mainTwit(musicalName: string, ticketingNum: string, sche
     })
 
   const cancelPrint = cancelgroup.map(elem => {
-    return `${format(elem.time)} ${elem.sites.join(', ')}`
+    const sitePrint = elem.sites.map(site => site === TICKETING_SITE.INTERPARK_SYNC ? '인터파크' : site).join(', ')
+    return `${format(elem.time)} ${sitePrint}`
   })
 
   const waitingList: Schedule[] = []
   scheduleList.forEach(schedule => {
     schedule.sites.forEach(site => {
       if (excludeSites.includes(site)) return
-      if (hasWaitingService(site)) {
+      if (hasWaitingService(site, schedule.noWaitingService)) {
         waitingList.push({
           time: getTicketWaitingTime(schedule.time, site) || new Date(0),
           sites: [site],
@@ -54,7 +56,8 @@ export default function mainTwit(musicalName: string, ticketingNum: string, sche
       return +a.time - +b.time
     })
     .map(elem => {
-      return `${format(elem.time)} ${elem.sites}`
+      const sitePrint = elem.sites.map(site => site === TICKETING_SITE.INTERPARK_SYNC ? '인터파크' : site).join(', ')
+      return `${format(elem.time)} ${sitePrint}`
     })
 
   const content =
