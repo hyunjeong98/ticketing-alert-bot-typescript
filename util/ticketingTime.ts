@@ -10,6 +10,11 @@ function getCancelTicketTime(orgTicketingTime: Date, ticketingStie: TICKETING_SI
       result.setHours(9)
       result.setMinutes(0)
       return result
+    case TICKETING_SITE.INTERPARK_SYNC:
+      result.setDate(orgTicketingTime.getDate() + 2)
+      result.setHours(2)
+      result.setMinutes(0)
+      return result
     case TICKETING_SITE.MELON:
       result.setDate(orgTicketingTime.getDate() + 2)
       result.setHours(0)
