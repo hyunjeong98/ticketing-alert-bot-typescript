@@ -33,7 +33,13 @@ function isSameTime(targetTime: Date | undefined) {
   return false
 }
 
-function hasWaitingService(site: TICKETING_SITE) {
+function hasWaitingService(site: TICKETING_SITE, noWaitingService?: TICKETING_SITE[]) {
+  // 명시적으로 대기 서비스가 없다고 지정된 경우
+  if (noWaitingService?.includes(site)) {
+    return false
+  }
+
+  // 기본 대기 서비스 제공 사이트
   switch (site) {
     case TICKETING_SITE.INTERPARK:
     case TICKETING_SITE.TICKETLINK:

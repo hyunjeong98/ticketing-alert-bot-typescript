@@ -21,5 +21,6 @@ export enum TICKETING_SITE {
 
 export type Schedule = {
   time: Date,
-  sites: TICKETING_SITE[]
+  sites: TICKETING_SITE[],
+  noWaitingService?: TICKETING_SITE[]
 }

@@ -66,7 +66,7 @@ export default async function alert(musicalName: string, scheduleList: Schedule[
         continue
       }
 
-      if (hasWaitingService(site)) {
+      if (hasWaitingService(site, schedule.noWaitingService)) {
         // 예매대기 전날 알림
         const waitingTime = getTicketWaitingTime(schedule.time, site)
         if (isSameTime(getWaitingEveAlert(schedule.time, site))) {
