@@ -67,7 +67,7 @@ export default function mainTwit(musicalName: string, ticketingNum: string, sche
     `${ticketingPrint.join('\n')}\n` +
     `\n[취켓팅]\n` +
     `${cancelPrint.join('\n')}\n` +
-    `\n[예매대기]\n` +
+    `${waitingPrint.length > 0 ? '\n[예매대기]\n' : ''}` +
     `${waitingPrint.join('\n')}`
   console.log(content)
   // await writeTwit(content)
