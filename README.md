@@ -80,7 +80,7 @@ await alert('공연명', scheduleList)
 
 ### `alert` 옵션
 
-특정 사이트를 취켓팅/예매대기 알림에서 제외하려면 세 번째 인자로 전달합니다:
+특정 사이트를 입금마감/취켓팅/예매대기 알림에서 제외하고 티켓팅 D-1/당일 알림만 받으려면 세 번째 인자로 전달합니다:
 
 ```ts
 await alert('공연명', scheduleList, [TICKETING_SITE.INTERPARK])
