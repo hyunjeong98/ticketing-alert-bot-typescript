@@ -5,12 +5,12 @@ function getCancelTicketTime(orgTicketingTime: Date, ticketingStie: TICKETING_SI
   const result = new Date(orgTicketingTime)
   switch (ticketingStie) {
     case TICKETING_SITE.DAEJEON:
-    case TICKETING_SITE.INTERPARK:
+    case TICKETING_SITE.NOL:
       result.setDate(orgTicketingTime.getDate() + 2)
       result.setHours(9)
       result.setMinutes(0)
       return result
-    case TICKETING_SITE.INTERPARK_SYNC:
+    case TICKETING_SITE.NOL_SYNC:
       result.setDate(orgTicketingTime.getDate() + 2)
       result.setHours(2)
       result.setMinutes(0)
@@ -60,7 +60,7 @@ function getCancelTicketTime(orgTicketingTime: Date, ticketingStie: TICKETING_SI
 function getTicketWaitingTime(orgTicketingTime: Date, ticketingSite: TICKETING_SITE) {
   const result = new Date(orgTicketingTime)
   switch (ticketingSite) {
-    case TICKETING_SITE.INTERPARK:
+    case TICKETING_SITE.NOL:
       result.setDate(orgTicketingTime.getDate() + 3)
       result.setHours(8)
       return result

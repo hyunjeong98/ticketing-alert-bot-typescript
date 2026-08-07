@@ -4,7 +4,7 @@ import { format, hasWaitingService } from "./common"
 
 export default function mainTwit(musicalName: string, ticketingNum: string, scheduleList: Schedule[], excludeSites: TICKETING_SITE[] = []) {
   const ticketingPrint = scheduleList.map(elem => {
-    const sitePrint = elem.sites.map(site => site === TICKETING_SITE.INTERPARK_SYNC ? '인터파크' : site).join(', ')
+    const sitePrint = elem.sites.map(site => site === TICKETING_SITE.NOL_SYNC ? 'NOL' : site).join(', ')
     return `${format(elem.time)} ${sitePrint}`
   })
 
@@ -35,7 +35,7 @@ export default function mainTwit(musicalName: string, ticketingNum: string, sche
     })
 
   const cancelPrint = cancelgroup.map(elem => {
-    const sitePrint = elem.sites.map(site => site === TICKETING_SITE.INTERPARK_SYNC ? '인터파크' : site).join(', ')
+    const sitePrint = elem.sites.map(site => site === TICKETING_SITE.NOL_SYNC ? 'NOL' : site).join(', ')
     return `${format(elem.time)} ${sitePrint}`
   })
 
@@ -56,7 +56,7 @@ export default function mainTwit(musicalName: string, ticketingNum: string, sche
       return +a.time - +b.time
     })
     .map(elem => {
-      const sitePrint = elem.sites.map(site => site === TICKETING_SITE.INTERPARK_SYNC ? '인터파크' : site).join(', ')
+      const sitePrint = elem.sites.map(site => site === TICKETING_SITE.NOL_SYNC ? 'NOL' : site).join(', ')
       return `${format(elem.time)} ${sitePrint}`
     })
 

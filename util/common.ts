@@ -41,7 +41,7 @@ function hasWaitingService(site: TICKETING_SITE, noWaitingService?: TICKETING_SI
 
   // 기본 대기 서비스 제공 사이트
   switch (site) {
-    case TICKETING_SITE.INTERPARK:
+    case TICKETING_SITE.NOL:
     case TICKETING_SITE.TICKETLINK:
       return true
     default:

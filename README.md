@@ -19,8 +19,8 @@
 
 | 상수 | 사이트명 |
 |------|----------|
-| `INTERPARK` | 인터파크 |
-| `INTERPARK_SYNC` | 인터파크(연동) |
+| `NOL` | NOL |
+| `NOL_SYNC` | NOL(연동) |
 | `MELON` | 멜론티켓 |
 | `TICKETLINK` | 티켓링크 |
 | `YES24` | 예스24 |
@@ -33,7 +33,7 @@
 | `DAEJEON` | 대전예술의전당 |
 | `YEDANG` | 예술의 전당 |
 | `CLIP_SERVEICE` | 클립서비스 |
-| `TOPING_FIRST` | 인터파크 토핑 선예매 |
+| `TOPING_FIRST` | NOL 토핑 선예매 |
 | `MON` | MON 멤버십 |
 | `META` | 메타클럽 |
 | `BUSAN_BANK` | 부산은행 |
@@ -67,7 +67,7 @@ import alert from './util/alert'
 const scheduleList = [
   {
     time: new Date(2026, 3, 7, 14), // 4월 7일 오후 2시
-    sites: [TICKETING_SITE.INTERPARK, TICKETING_SITE.TICKETLINK],
+    sites: [TICKETING_SITE.NOL, TICKETING_SITE.TICKETLINK],
   },
 ]
 
@@ -83,7 +83,7 @@ await alert('공연명', scheduleList)
 특정 사이트를 입금마감/취켓팅/예매대기 알림에서 제외하고 티켓팅 D-1/당일 알림만 받으려면 세 번째 인자로 전달합니다:
 
 ```ts
-await alert('공연명', scheduleList, [TICKETING_SITE.INTERPARK])
+await alert('공연명', scheduleList, [TICKETING_SITE.NOL])
 ```
 
 특정 회차에서 예매대기 서비스가 없는 사이트는 `noWaitingService`로 지정합니다:
@@ -92,7 +92,7 @@ await alert('공연명', scheduleList, [TICKETING_SITE.INTERPARK])
 const scheduleList = [
   {
     time: new Date(2026, 3, 7, 14),
-    sites: [TICKETING_SITE.INTERPARK, TICKETING_SITE.TICKETLINK],
+    sites: [TICKETING_SITE.NOL, TICKETING_SITE.TICKETLINK],
     noWaitingService: [TICKETING_SITE.TICKETLINK],
   },
 ]
