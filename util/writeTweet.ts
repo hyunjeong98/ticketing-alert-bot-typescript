@@ -10,9 +10,12 @@ export default async function writeTweet(
   musicalName: string
 ) {
   const sitePrint = sites.map(site => site === TICKETING_SITE.NOL_SYNC ? 'NOL' : site).join(', ')
-  await client.v2.tweet(
-    `[${alertType}] ${musicalName} \n\u{1F352} ${format(
-      time
-    )} \n\u{1F352} ${sitePrint}`
-  )
+  const content = `[${alertType}] ${musicalName} \n\u{1F352} ${format(time)} \n\u{1F352} ${sitePrint}`
+
+  if (process.env.NODE_ENV === 'qa') {
+    console.log(`[QA] 트윗 미발송:\n${content}`)
+    return
+  }
+
+  await client.v2.tweet(content)
 }
