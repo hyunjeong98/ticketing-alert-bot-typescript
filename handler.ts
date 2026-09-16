@@ -1,17 +1,28 @@
-import mainTwit from './util/mainTwit';
-import { TICKETING_SITE } from './type/types';
-import alert from './util/alert'
+import { TwitterApi } from 'twitter-api-v2'
+import { TICKETING_SITE } from './type/types'
+import writeTweet from './util/writeTweet'
+import { groupDueAlerts } from './util/groupDueAlerts'
+import { deactivateFinishedSchedules, fetchAlertsToSend, markAlertsSent } from './util/db'
 
 export async function xia() {
+  const dueAlerts = await fetchAlertsToSend()
+  const buckets = groupDueAlerts(dueAlerts)
 
-  const scheduleList = [
-    { time: new Date(2023, 9, 7, 14), sites: [TICKETING_SITE.LOTTE] },
-    { time: new Date(2023, 9, 8, 13), sites: [TICKETING_SITE.TOPING_FIRST] },
-    { time: new Date(2023, 9, 8, 14), sites: [TICKETING_SITE.INTERPARK, TICKETING_SITE.TICKETLINK] },
-  ]
+  if (buckets.length > 0) {
+    const client = new TwitterApi({
+      appKey: process.env.APP_KEY!,
+      appSecret: process.env.APP_SECRET!,
+      accessToken: process.env.ACCESS_TOKEN!,
+      accessSecret: process.env.ACCESS_SECRET!,
+    })
 
-  console.log(mainTwit('드라큘라', '1st', scheduleList))
-  await alert('드라큘라', scheduleList)
+    for (const bucket of buckets) {
+      await writeTweet(client, bucket.alertType, bucket.displayTime, bucket.sites as TICKETING_SITE[], bucket.musicalName)
+      await markAlertsSent(bucket.ids)
+    }
+  }
+
+  await deactivateFinishedSchedules()
 
   const response = {
     statusCode: 200,

@@ -18,9 +18,3 @@ export enum TICKETING_SITE {
   CLIP_SERVEICE = '클립서비스',
   LG_ART_CENTER = 'LG아트센터',
 }
-
-export type Schedule = {
-  time: Date,
-  sites: TICKETING_SITE[],
-  noWaitingService?: TICKETING_SITE[]
-}
