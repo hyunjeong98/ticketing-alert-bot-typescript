@@ -10,6 +10,7 @@ import Card from '../../../components/Card'
 import Button from '../../../components/Button'
 import { ScheduleRow, useDeleteSchedule, useSchedule, useToggleActive, useUpdateSchedule } from '../../../lib/schedules'
 import { ScheduleAlertRow, useScheduleAlerts } from '../../../lib/scheduleAlerts'
+import MainTweetDialog from './MainTweetDialog'
 
 function rowToFormValue(row: ScheduleRow): ScheduleFormValue {
   return {
@@ -35,6 +36,7 @@ export default function ScheduleDetailPage() {
   const deleteSchedule = useDeleteSchedule()
   const toggleActive = useToggleActive(params.id)
   const [editing, setEditing] = useState(false)
+  const [showMainTweet, setShowMainTweet] = useState(false)
 
   async function handleUpdate(value: ScheduleFormValue) {
     await updateSchedule.mutateAsync(value)
@@ -70,19 +72,8 @@ export default function ScheduleDetailPage() {
           />
         ) : (
           <>
-            <div className="mb-4 flex gap-2">
-              <Button variant="secondary" onClick={() => setEditing(true)}>
-                스케줄 수정
-              </Button>
-              <Button variant="danger" onClick={handleDelete}>
-                삭제
-              </Button>
-              <Button variant="secondary" onClick={handleToggleActive}>
-                {schedule.is_active ? '비활성화' : '활성화'}
-              </Button>
-            </div>
             <h1 className="mb-2 text-xl font-semibold">{schedule.musical_name}</h1>
-            <dl className="space-y-1 text-sm">
+            <dl className="mb-4 space-y-1 text-sm">
               <div className="flex gap-2">
                 <dt className="w-24 shrink-0 text-gray-500">오픈 일시</dt>
                 <dd>{utcDateToKstLocal(new Date(schedule.open_time)).replace('T', ' ')}</dd>
@@ -96,9 +87,27 @@ export default function ScheduleDetailPage() {
                 <dd>{schedule.is_active ? '진행중' : '완료'}</dd>
               </div>
             </dl>
+            <div className="flex flex-wrap gap-2">
+              <Button variant="secondary" onClick={() => setShowMainTweet(true)}>
+                메인 트윗
+              </Button>
+              <Button variant="secondary" onClick={() => setEditing(true)}>
+                수정
+              </Button>
+              <Button variant="secondary" onClick={handleToggleActive}>
+                {schedule.is_active ? '비활성화' : '활성화'}
+              </Button>
+              <Button variant="danger" onClick={handleDelete}>
+                삭제
+              </Button>
+            </div>
           </>
         )}
       </Card>
+
+      {showMainTweet && schedule && (
+        <MainTweetDialog schedule={schedule} onClose={() => setShowMainTweet(false)} />
+      )}
 
       <Card>
         <h2 className="mb-3 text-base font-semibold">세부 알림 일정</h2>
