@@ -3,11 +3,15 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs20.x
+  environment:
+    NODE_ENV: ${sls:stage}
 
 functions:
   xia-ticketing:
     handler: handler.xia
+    events:
+      - schedule: cron(40 0-23 * * ? *)
 
 plugins:
   - serverless-plugin-typescript
