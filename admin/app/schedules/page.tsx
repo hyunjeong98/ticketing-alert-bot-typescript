@@ -8,6 +8,7 @@ import { utcDateToKstLocal } from '../../lib/kst'
 import Card from '../../components/Card'
 import Button from '../../components/Button'
 import { useCreateSchedule, useSchedules } from '../../lib/schedules'
+import { isQa } from '../../lib/env'
 
 export default function SchedulesPage() {
   const { data: schedules, isLoading } = useSchedules()
@@ -21,7 +22,7 @@ export default function SchedulesPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-5 py-8">
-      <h1 className="mb-4 text-xl font-semibold">티켓팅 알람 스케줄</h1>
+      <h1 className="mb-4 text-xl font-semibold">티켓팅 알람 스케줄{isQa && ' (QA)'}</h1>
 
       <Card className="mb-4">
         {creating ? (
