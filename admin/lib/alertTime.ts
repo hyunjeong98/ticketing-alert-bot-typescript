@@ -1,12 +1,12 @@
 import { getTicketWaitingTime } from './ticketingTime'
 import { TICKETING_SITE } from '../constants/ticketingSite'
+import { setKstHours } from './kst'
 
 // 본 티켓팅 전날 알림 시간 계산
 function getTicketingEveAlert(orgTicketingTime: Date) {
   const result = new Date(orgTicketingTime)
   result.setDate(result.getDate() - 1) // 티켓팅 전날
-  result.setHours(21) // 오후 9시대
-  return result
+  return setKstHours(result, 21) // 오후 9시대
 }
 
 // 본 티켓팅 당일 알림 시간 계산
@@ -23,16 +23,13 @@ function getPayAlert(orgTicketingTime: Date, ticketingSite?: TICKETING_SITE) {
 
   switch (ticketingSite) {
     case TICKETING_SITE.DREAM_THEATER:
-      result.setHours(10) // 오전 10시대
-      break
+      return setKstHours(result, 10) // 오전 10시대
     case TICKETING_SITE.LG_ART_CENTER:
       result.setHours(result.getHours() - 1)
-      break
+      return result
     default:
-      result.setHours(22) // 오후 10시대
+      return setKstHours(result, 22) // 오후 10시대
   }
-
-  return result
 }
 
 // 취켓 알람 시간 계산
@@ -57,8 +54,7 @@ function getWaitingEveAlert(orgTicketingTime: Date, ticketingSite: TICKETING_SIT
   if (!ticketWaitingTime) return
   const result = new Date(ticketWaitingTime)
   result.setDate(result.getDate() - 1)
-  result.setHours(22)
-  return result
+  return setKstHours(result, 22)
 }
 
 export {
